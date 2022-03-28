@@ -15,7 +15,6 @@ secret_keeper = SecretKeeper()
 
 @app.get("/")
 def home(request: Request):
-    print(secret_keeper.data())
     return templates.TemplateResponse("home.html", {"request": request, "id": 123})
 
 

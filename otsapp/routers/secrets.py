@@ -1,6 +1,5 @@
 from typing import Optional
-from fastapi import Depends, Form, Request
-from fastapi import APIRouter
+from fastapi import Depends, Form, Request, APIRouter
 from otsapp.settings import Settings, get_settings
 from otsapp.dtos import SecretData
 

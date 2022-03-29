@@ -1,0 +1,19 @@
+<html>
+
+<head>
+    <title>OTS Sharing</title>
+</head>
+
+<body>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+    <script>
+        function copy_to_clipboard(id) {
+            document.getElementById(id).select();
+            document.execCommand('copy');
+        }
+    </script>
+</body>
+
+</html>

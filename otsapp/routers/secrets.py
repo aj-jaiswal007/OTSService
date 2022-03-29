@@ -1,7 +1,7 @@
 from typing import Optional
-from fastapi import Form, Request
+from fastapi import Depends, Form, Request
 from fastapi import APIRouter
-
+from otsapp.settings import Settings, get_settings
 from otsapp.dtos import SecretData
 
 from ..services.secret_keeper import SecretKeeper
@@ -13,7 +13,8 @@ secret_keeper = SecretKeeper()
 
 
 @router.get("/")
-def home(request: Request):
+def home(request: Request, settings: Settings = Depends(get_settings)):
+    print("settings", settings.BASE_URL)
     return templates.TemplateResponse("home.html", {"request": request, "id": 123})
 
 
@@ -22,13 +23,14 @@ def create_secret(
     request: Request,
     secret: str = Form(...),
     passphrase: Optional[str] = Form(default=None),
+    settings: Settings = Depends(get_settings),
 ):
     key = secret_keeper.add_secret(
         data=SecretData(secret=secret, passphrase=passphrase)
     )
     return templates.TemplateResponse(
         "secret_link.html",
-        {"request": request, "base_url": "http://127.0.0.1:8000/", "key": key},
+        {"request": request, "base_url": settings.BASE_URL.rstrip("/"), "key": key},
     )
 
 
